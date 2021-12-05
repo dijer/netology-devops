@@ -12,3 +12,4 @@
 - Ignore CLI configuration files
 
 ### One more line
+### Changes for ide
