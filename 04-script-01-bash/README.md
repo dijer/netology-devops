@@ -123,7 +123,7 @@ done
 #!/usr/bin/env bash
 
 commitMsg='[04-script-01-bash] qwe'
-regex='^\[([0-9]+)-([a-zA-Z]+)-([0-9]+)-([a-zA-Z]+)\] ([a-zA-Zа-яА-Я]){1,30}'
+regex='^\[([0-9]+)-([a-zA-Z]+)-([0-9]+)-([a-zA-Z]+)\] (.){1,30}$'
 
 if [[ $commitMsg =~ $regex ]]
   then
