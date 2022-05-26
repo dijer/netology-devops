@@ -4,6 +4,25 @@
 
 Используя docker поднимите инстанс PostgreSQL (версию 13). Данные БД сохраните в volume.
 
+```yaml
+version: "3.9"
+services:
+  db:
+    image: postgres:13
+    restart: always
+    container_name: postgres
+    volumes:
+      - ./test_data:/etc/test_data
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test_database
+    ports:
+      - 5432:5432
+
+```
+
 Подключитесь к БД PostgreSQL используя `psql`.
 
 `psql -d test_database`
@@ -98,4 +117,6 @@ COMMIT;
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 ```
 добавил бы unique, но unique не применяются к шардированной таблице
+ALTER TABLE orders
+	ADD CONSTRAINT unique_title UNIQUE (title);
 ```
