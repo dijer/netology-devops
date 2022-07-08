@@ -10,7 +10,7 @@ resource "yandex_compute_instance" "vm" {
   name = "ubuntu"
   zone = "ru-central1-a"
   resources {
-    cores = locals.cores[terraform.workspace]
+    cores = local.cores[terraform.workspace]
     memory = 2
   }
   boot_disk {
@@ -31,7 +31,7 @@ resource "yandex_compute_instance" "vm2" {
   name = "ubuntu"
   zone = "ru-central1-a"
   resources {
-    cores = locals.cores[each.key]
+    cores = local.cores[each.key]
     memory = 2
   }
   boot_disk {
@@ -47,6 +47,25 @@ resource "yandex_compute_instance" "vm2" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
+
+  name = "single-instance"
+
+  ami                    = "ami-ebd02392"
+  instance_type          = "t2.micro"
+  key_name               = "user1"
+  monitoring             = true
+  vpc_security_group_ids = ["sg-12345678"]
+  subnet_id              = "subnet-eddcdzz4"
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
 
